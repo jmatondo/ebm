@@ -3,13 +3,7 @@ import Homes from "../pages/Homes";
 import Notes from "../pages/Notes";
 
 const Layouts = () => {
-  return (
-    <div>
-      Layouts
-      <Homes />
-      <Notes />
-    </div>
-  );
+  return <div>Layouts</div>;
 };
 
 export default Layouts;
