@@ -14,7 +14,7 @@ const Navbar = () => {
           <FaIcons.FaBars onClick={showSidebar} />
         </Link>
       </div>
-      {/*       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+      <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul classNam="nav-menu-items">
           <li className="navbar-toggle">
             <Link to="#" className="menu-bars">
@@ -32,7 +32,7 @@ const Navbar = () => {
             );
           })}
         </ul>
-      </nav> */}
+      </nav>
     </>
   );
 };
