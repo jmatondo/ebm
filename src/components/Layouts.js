@@ -3,7 +3,7 @@ import Homes from "../pages/Homes";
 import Notes from "../pages/Ebm";
 
 const Layouts = () => {
-  return <div>Layouts</div>;
+  return <div></div>;
 };
 
 export default Layouts;

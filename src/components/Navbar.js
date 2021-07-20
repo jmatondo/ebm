@@ -26,16 +26,18 @@ const Navbar = () => {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-            {SideBarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span className="title2">{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
+            <div className="test">
+              {SideBarData.map((item, index) => {
+                return (
+                  <li key={index} className={item.cName}>
+                    <Link to={item.path}>
+                      {item.icon}
+                      <span className="title2">{item.title}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </div>
           </ul>
         </nav>
       </IconContext.Provider>
