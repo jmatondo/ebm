@@ -133,8 +133,8 @@ const Ebm = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8981/iccs/studies")
-      //fetch("https://iccv1.herokuapp.com/iccs/studies")
+    //fetch("http://localhost:8981/iccs/studies")
+    fetch("https://iccv1.herokuapp.com/iccs/studies")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.content);
