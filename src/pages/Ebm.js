@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { IconButton, makeStyles, Paper, Tooltip } from "@material-ui/core";
+import {
+  IconButton,
+  InputAdornment,
+  makeStyles,
+  Paper,
+  Toolbar,
+  Tooltip,
+} from "@material-ui/core";
 import TableBody from "@material-ui/core/TableBody";
 
 import TableCell from "@material-ui/core/TableCell";
@@ -10,12 +17,14 @@ import {
   Table,
   TablePagination,
   Typography,
+  TextField,
 } from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableHeader from "../components/TableHeader";
 import { red } from "@material-ui/core/colors";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import SearchIcon from "@material-ui/icons/Search";
 import PageHeader from "../components/PageHeader";
 import SubjectIcon from "@material-ui/icons/Subject";
 
@@ -24,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "violet",
     "&:hover": {
       backgroundColor: "blue",
+    },
+
+    searchIc: {
+      //width: "100px",
     },
   },
   speaker: {
@@ -69,6 +82,11 @@ const sortedRowInformation = (rowArray, comparator) => {
 const Ebm = () => {
   const classes = useStyles();
   const [studies, setstudies] = useState([]);
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
   //Define data
 
   const columns = [
@@ -115,14 +133,28 @@ const Ebm = () => {
   };
 
   useEffect(() => {
-    //fetch("http://localhost:8981/iccs/studies")
-    fetch("https://iccv1.herokuapp.com/iccs/studies")
+    fetch("http://localhost:8981/iccs/studies")
+      //fetch("https://iccv1.herokuapp.com/iccs/studies")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.content);
         setstudies(data.content);
       });
   }, []);
+
+  const handleSearch = (e) => {
+    let tar = e.target;
+    setFilterFn({
+      fn: (items) => {
+        if (tar === "") return items;
+        else {
+          return items.filter((x) => {
+            return x.globalSearch.toLowerCase().includes(tar.value);
+          });
+        }
+      },
+    });
+  };
 
   return (
     <>
@@ -132,6 +164,21 @@ const Ebm = () => {
         icon={<SubjectIcon fontSize="large" />}
       />
       <Paper className={classes.tableContainer}>
+        <Toolbar>
+          <TextField
+            style={{ width: "75%", margin: "0.5rem" }}
+            variant="outlined"
+            label="Recherche globale"
+            onChange={handleSearch}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer>
           <Table>
             <TableHeader
@@ -141,7 +188,7 @@ const Ebm = () => {
             />
             <TableBody>
               {sortedRowInformation(
-                studies,
+                filterFn.fn(studies),
                 getComparator(orderDirection, valueToOrderBy)
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

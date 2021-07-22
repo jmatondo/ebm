@@ -28,6 +28,7 @@
   left: -100%;
   transition: 850ms;
   border-radius: 20px;
+  z-index: 200;
 }
 
 .test {
