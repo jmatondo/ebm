@@ -1,62 +1,47 @@
 import React, { useEffect, useState } from "react";
+import PageHeader from "../components/PageHeader";
+import SubjectIcon from "@material-ui/icons/Subject";
+import SearchIcon from "@material-ui/icons/Search";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 import {
   IconButton,
   InputAdornment,
   makeStyles,
   Paper,
-  Toolbar,
-  Tooltip,
-} from "@material-ui/core";
-import TableBody from "@material-ui/core/TableBody";
-
-import TableCell from "@material-ui/core/TableCell";
-import {
-  TableContainer,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TablePagination,
-  Typography,
+  TableRow,
   TextField,
+  Toolbar,
+  Typography,
+  Avatar,
+  Grid,
 } from "@material-ui/core";
-import TableRow from "@material-ui/core/TableRow";
-import TableHeader from "../components/TableHeader";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import SearchIcon from "@material-ui/icons/Search";
-import PageHeader from "../components/PageHeader";
-import SubjectIcon from "@material-ui/icons/Subject";
+import MicTableHeader from "../components/MicTableHeader";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    backgroundColor: "violet",
-    "&:hover": {
-      backgroundColor: "blue",
-    },
-  },
-  speaker: {
-    color: "blue",
-    backgroundColor: "lightGreen",
-    width: "fit-content",
-    borderRadius: "5px",
-  },
   tableContainer: {
     borderRadius: 15,
     margin: "30px",
   },
-  espa: {
-    padding: theme.spacing(1),
+  cont: {
+    marginLeft: "30px",
+    maxWidth: "95%",
   },
-  titre: {
-    color: "blue",
+  name: {
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
   },
-  reference: {
-    color: "red",
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor: "blue",
-    },
+  avatar: {
+    paddingRight: "5px",
   },
 }));
 
+// Sorting
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -85,9 +70,15 @@ const sortedRowInformation = (rowArray, comparator) => {
   return stabilizedRowArray.map((el) => el[0]);
 };
 
-const Ebm = () => {
+const Mic = () => {
+  // Styling
   const classes = useStyles();
-  const [studies, setstudies] = useState([]);
+  // State
+  const [mics, setMics] = useState([]);
+  // Sorting
+  const [orderDirection, setOrderDirection] = useState("asc");
+  const [valueToOrderBy, setValueToOrderBy] = useState("ref");
+
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -95,11 +86,21 @@ const Ebm = () => {
   });
 
   // PAge
-  const [orderDirection, setOrderDirection] = useState("asc");
-  const [valueToOrderBy, setValueToOrderBy] = useState("ref");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  // Get data
+  useEffect(() => {
+    fetch("http://localhost:8981/iccs/mics")
+      //fetch("https://iccv1.herokuapp.com/iccs/mics")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.content);
+        setMics(data.content);
+      });
+  }, []);
+
+  // Sorting
   const handleRequestSort = (event, property) => {
     const isAscending = valueToOrderBy === property && orderDirection === "asc";
     setValueToOrderBy(property);
@@ -110,6 +111,7 @@ const Ebm = () => {
     handleRequestSort(event, property);
   };
 
+  // Pagination
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -119,20 +121,7 @@ const Ebm = () => {
     setPage(0);
   };
 
-  const onDownloadHandler = (id) => {
-    console.log("Ligne:= " + id);
-  };
-
-  useEffect(() => {
-    fetch("http://localhost:8981/iccs/studies")
-      //fetch("https://iccv1.herokuapp.com/iccs/studies")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.content);
-        setstudies(data.content);
-      });
-  }, []);
-
+  // Search
   const handleSearch = (e) => {
     let tar = e.target;
     setFilterFn({
@@ -150,17 +139,18 @@ const Ebm = () => {
   return (
     <>
       <PageHeader
-        title="Les études bibliques du midi"
+        title="Méga Impact conférence"
         subTitle="Choisisez et téléchargez les notes"
         icon={<SubjectIcon fontSize="large" />}
       />
+
       <Paper className={classes.tableContainer}>
         <Toolbar>
           <TextField
             style={{ width: "75%", margin: "0.5rem" }}
             variant="outlined"
-            label="Recherche globale"
             onChange={handleSearch}
+            label="Recherche globale"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -170,45 +160,45 @@ const Ebm = () => {
             }}
           />
         </Toolbar>
-        <TableContainer>
+        <TableContainer component={Paper} className={classes.cont}>
           <Table>
-            <TableHeader
+            <MicTableHeader
               valueToOrderBy={valueToOrderBy}
               orderDirection={orderDirection}
               createSortHandler={createSortHandler}
             />
             <TableBody>
               {sortedRowInformation(
-                filterFn.fn(studies),
+                filterFn.fn(mics),
                 getComparator(orderDirection, valueToOrderBy)
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((study, index) => (
+                .map((mic, index) => (
                   <TableRow key={index} className={classes.espa}>
-                    <TableCell>{study.studyId}</TableCell>
+                    {/*                     <TableCell>{mic.id}</TableCell>
+                     */}{" "}
+                    <TableCell>{mic.micDay}</TableCell>
                     <TableCell>
-                      <Typography>{study.speaker.title}</Typography>
-                      <Typography className={classes.titre}>
-                        {study.speaker.firstName} {study.speaker.lastName}
-                      </Typography>
+                      <Grid container>
+                        <Grid item lg={2}>
+                          <Avatar alt={mic.speaker.lastName} src="/yvan.png" />
+                        </Grid>
+                        <Grid item lg={10}>
+                          <Typography>{mic.speaker.title}</Typography>
+                          <Typography variant="body2" className={classes.name}>
+                            {mic.speaker.firstName} {mic.speaker.lastName}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </TableCell>
-                    <TableCell className={classes.reference}>
-                      {" "}
-                      <Tooltip title={study.studyReference.content}>
-                        <Typography className={classes.reference}>
-                          {study.studyReference.passage}
-                        </Typography>
-                      </Tooltip>
+                    <TableCell>
+                      <Typography>{mic.theme}</Typography>
                     </TableCell>
-                    <TableCell>{study.studyDay}</TableCell>
                     <TableCell>
                       <a
-                        href={`https://iccv1.herokuapp.com/downloadFile/${study.studyId}`}
+                        href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
                       >
-                        <IconButton
-                          color="secondary"
-                          //onClick={() => onDownloadHandler(study.studyId)}
-                        >
+                        <IconButton color="secondary">
                           <GetAppIcon />
                         </IconButton>
                       </a>
@@ -221,7 +211,7 @@ const Ebm = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={studies.length}
+          count={mics.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -232,10 +222,4 @@ const Ebm = () => {
   );
 };
 
-export default Ebm;
-
-/*
-.table tbody tr:nth-child(even){
-  backgroundColor: #f5f5f5
-}
-*/
+export default Mic;

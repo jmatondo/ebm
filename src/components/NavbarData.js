@@ -11,13 +11,13 @@ export const SideBarData = [
   },
   {
     title: "Cultes dominicales",
-    path: "/culte",
+    path: "/cultes",
     icon: <BiIcons.BiChurch />,
     cName: "nav-text",
   },
   {
     title: "Méga Impact Conf.",
-    path: "/mic",
+    path: "/mics",
     icon: <BiIcons.BiChurch />,
     cName: "nav-text",
   },

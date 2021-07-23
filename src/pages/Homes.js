@@ -52,14 +52,20 @@ const Homes = () => {
         className={classes.grid}
       >
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          <Paper
+            className={classes.paper}
+            onClick={() => history.push("/cultes")}
+          >
             <HomeIcon fontSize="medium" />
             <Typography className={classes.typo}>Cultes dominicales</Typography>
           </Paper>
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          <Paper
+            className={classes.paper}
+            onClick={() => history.push("/mics")}
+          >
             <AccountBalanceIcon fontSize="medium" />{" "}
             <Typography className={classes.typo}>
               {" "}
@@ -78,7 +84,10 @@ const Homes = () => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          <Paper
+            className={classes.paper}
+            onClick={() => history.push("/other")}
+          >
             <SubjectIcon fontSize="medium" />{" "}
             <Typography className={classes.typo}>
               Autres (1H tous ensemble, ...)

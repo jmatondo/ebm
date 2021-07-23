@@ -9,8 +9,6 @@ const useStyles = makeStyles((theme) => ({
   pageHeader: {
     display: "flex",
     padding: theme.spacing(1),
-    //marginBottom: theme.spacing(3),
-    // border: "2px solid blue",
   },
   pageIcon: {
     display: "inline-block",
