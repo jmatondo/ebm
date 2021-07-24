@@ -20,17 +20,25 @@ import {
   Typography,
   Avatar,
   Grid,
+  Hidden,
 } from "@material-ui/core";
 import MicTableHeader from "../components/MicTableHeader";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 15,
-    margin: "30px",
+    margin: "15px",
+    paddingBottom: "10px",
+    //backgroundColor: "yellow",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   cont: {
-    marginLeft: "30px",
+    marginLeft: "5px",
     maxWidth: "95%",
+    //backgroundColor: "red",
   },
   name: {
     fontWeight: "bold",
@@ -38,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     paddingRight: "5px",
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-flex-star",
   },
 }));
 
@@ -129,6 +141,7 @@ const Mic = () => {
         if (tar === "") return items;
         else {
           return items.filter((x) => {
+            console.log("Global:= ", x.globalSearch);
             return x.globalSearch.toLowerCase().includes(tar.value);
           });
         }
@@ -145,7 +158,7 @@ const Mic = () => {
       />
 
       <Paper className={classes.tableContainer}>
-        <Toolbar>
+        <Toolbar className={classes.toolbar} style={{ width: "95%" }}>
           <TextField
             style={{ width: "75%", margin: "0.5rem" }}
             variant="outlined"
@@ -159,6 +172,7 @@ const Mic = () => {
               ),
             }}
           />
+          {/* <div style={{ flexGrow: "5", backgroundColor: "green" }}>test</div> */}
         </Toolbar>
         <TableContainer component={Paper} className={classes.cont}>
           <Table>
@@ -177,46 +191,71 @@ const Mic = () => {
                   <TableRow key={index} className={classes.espa}>
                     {/*                     <TableCell>{mic.id}</TableCell>
                      */}{" "}
-                    <TableCell>{mic.micDay}</TableCell>
-                    <TableCell>
-                      <Grid container>
-                        <Grid item lg={2}>
-                          <Avatar alt={mic.speaker.lastName} src="/yvan.png" />
+                    <Hidden xsDown>
+                      <TableCell>{mic.micDay}</TableCell>
+
+                      <TableCell>
+                        <Grid container>
+                          <Grid item lg={2}>
+                            <Avatar
+                              alt={mic.speaker.lastName}
+                              src="/yvan.png"
+                            />
+                          </Grid>
+                          <Grid item lg={10}>
+                            <Typography>{mic.speaker.title}</Typography>
+                            <Typography
+                              variant="body2"
+                              className={classes.name}
+                            >
+                              {mic.speaker.firstName} {mic.speaker.lastName}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item lg={10}>
-                          <Typography>{mic.speaker.title}</Typography>
-                          <Typography variant="body2" className={classes.name}>
-                            {mic.speaker.firstName} {mic.speaker.lastName}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell>
-                      <Typography>{mic.theme}</Typography>
-                    </TableCell>
-                    <TableCell>
-                      <a
-                        href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
-                      >
-                        <IconButton color="secondary">
-                          <GetAppIcon />
-                        </IconButton>
-                      </a>
-                    </TableCell>
+                      </TableCell>
+                      <TableCell>
+                        <Typography noWrap style={{ backgroundColor: "red" }}>
+                          {mic.theme}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <a
+                          href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
+                        >
+                          <IconButton color="secondary">
+                            <GetAppIcon />
+                          </IconButton>
+                        </a>
+                      </TableCell>
+                    </Hidden>
+                    <Hidden smUp>
+                      <TableCell style={{ maxWidth: "300px" }}>
+                        <Typography>
+                          {mic.micDay} -{" "}
+                          <span className={classes.name}>
+                            {mic.speaker.title} {mic.speaker.firstName}{" "}
+                            {mic.speaker.lastName}
+                          </span>
+                        </Typography>
+
+                        <Typography noWrap>{mic.theme}</Typography>
+                      </TableCell>
+                    </Hidden>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
+          <TablePagination
+            style={{ padding: "10px", maxWidth: "110%" }}
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={mics.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={mics.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Paper>
     </>
   );

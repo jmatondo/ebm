@@ -45,6 +45,14 @@ const Homes = () => {
           icon={<SubjectIcon fontSize="large" />}
         />
       </div>
+
+      <Typography noWrap style={{ backgroundColor: "red" }}>
+        hello jerryhello jerryhello jerryhello jerryhello jerryhello jerryhello
+        jerryhello jerryhello jerryhello jerryhello jerryhello jerryhello
+        jerryhello jerryhello jerryhello jerryhello jerryhello jerryhello
+        jerryhello jerryhello jerryhello jerryhello jerryhello jerryhello
+        jerryhello jerryhello jerryhello jerry
+      </Typography>
       <Grid
         container
         spacing={2}

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Hidden,
   makeStyles,
   TableCell,
   TableHead,
@@ -20,21 +21,28 @@ const MicTableHeader = (props) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell key="micDay" className={classes.tableHeaderCell}>
-          <TableSortLabel
-            active={props.valueToOrderBy === "micDay"}
-            direction={
-              props.valueToOrderBy === "micDay" ? props.orderDirection : "desc"
-            }
-            onClick={props.createSortHandler("micDay")}
-          >
-            Date
-          </TableSortLabel>
-        </TableCell>
-        <TableCell className={classes.tableHeaderCell}>Orateur</TableCell>
-        <TableCell className={classes.tableHeaderCell}>Thème</TableCell>
+        <Hidden xsDown>
+          <TableCell key="micDay" className={classes.tableHeaderCell}>
+            <TableSortLabel
+              active={props.valueToOrderBy === "micDay"}
+              direction={
+                props.valueToOrderBy === "micDay"
+                  ? props.orderDirection
+                  : "desc"
+              }
+              onClick={props.createSortHandler("micDay")}
+            >
+              Date
+            </TableSortLabel>
+          </TableCell>
+          <TableCell className={classes.tableHeaderCell}>Orateur</TableCell>
+          <TableCell className={classes.tableHeaderCell}>Thème</TableCell>
 
-        <TableCell className={classes.tableHeaderCell}>Actions </TableCell>
+          <TableCell className={classes.tableHeaderCell}>Actions </TableCell>
+        </Hidden>
+        <Hidden smUp>
+          <TableCell className={classes.tableHeaderCell}>Thème</TableCell>
+        </Hidden>
       </TableRow>
     </TableHead>
   );
