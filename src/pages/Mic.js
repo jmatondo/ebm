@@ -229,16 +229,28 @@ const Mic = () => {
                       </TableCell>
                     </Hidden>
                     <Hidden smUp>
-                      <TableCell style={{ maxWidth: "300px" }}>
-                        <Typography>
-                          {mic.micDay} -{" "}
-                          <span className={classes.name}>
-                            {mic.speaker.title} {mic.speaker.firstName}{" "}
-                            {mic.speaker.lastName}
-                          </span>
-                        </Typography>
+                      <TableCell
+                        style={{ maxWidth: "300px" }}
+                        /*                         onClick={() => {
+                          <a
+                            href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
+                          ></a>;
+                        }} */
+                      >
+                        <a
+                          style={{ textDecoration: "none" }}
+                          href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
+                        >
+                          <Typography>
+                            {mic.micDay} -{" "}
+                            <span className={classes.name}>
+                              {mic.speaker.title} {mic.speaker.firstName}{" "}
+                              {mic.speaker.lastName}
+                            </span>
+                          </Typography>
 
-                        <Typography noWrap>{mic.theme}</Typography>
+                          <Typography noWrap>{mic.theme}</Typography>
+                        </a>
                       </TableCell>
                     </Hidden>
                   </TableRow>
