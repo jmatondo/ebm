@@ -32,7 +32,7 @@ const MicTableHeader = (props) => {
               }
               onClick={props.createSortHandler("micDay")}
             >
-              Date
+              Jour
             </TableSortLabel>
           </TableCell>
           <TableCell className={classes.tableHeaderCell}>Orateur</TableCell>
@@ -41,7 +41,12 @@ const MicTableHeader = (props) => {
           <TableCell className={classes.tableHeaderCell}>Actions </TableCell>
         </Hidden>
         <Hidden smUp>
-          <TableCell className={classes.tableHeaderCell}>Thème</TableCell>
+          <TableCell
+            className={classes.tableHeaderCell}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            Liste des thèmes
+          </TableCell>
         </Hidden>
       </TableRow>
     </TableHead>

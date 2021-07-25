@@ -7,6 +7,9 @@ import {
   Paper,
   Toolbar,
   Tooltip,
+  Hidden,
+  Grid,
+  Avatar,
 } from "@material-ui/core";
 import TableBody from "@material-ui/core/TableBody";
 
@@ -19,28 +22,36 @@ import {
   TextField,
 } from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow";
-import TableHeader from "../components/TableHeader";
+import TableHeader from "../components/EbmTableHeader";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import SearchIcon from "@material-ui/icons/Search";
 import PageHeader from "../components/PageHeader";
 import SubjectIcon from "@material-ui/icons/Subject";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    backgroundColor: "violet",
-    "&:hover": {
-      backgroundColor: "blue",
-    },
-  },
-  speaker: {
-    color: "blue",
-    backgroundColor: "lightGreen",
-    width: "fit-content",
-    borderRadius: "5px",
-  },
   tableContainer: {
     borderRadius: 15,
-    margin: "30px",
+    margin: "15px",
+    paddingBottom: "10px",
+    //backgroundColor: "yellow",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  cont: {
+    marginLeft: "5px",
+    maxWidth: "95%",
+    //backgroundColor: "red",
+  },
+
+  name: {
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
   },
   espa: {
     padding: theme.spacing(1),
@@ -49,10 +60,10 @@ const useStyles = makeStyles((theme) => ({
     color: "blue",
   },
   reference: {
-    color: "red",
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
     "&:hover": {
       cursor: "pointer",
-      backgroundColor: "blue",
     },
   },
 }));
@@ -124,8 +135,8 @@ const Ebm = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8981/iccs/studies")
-      //fetch("https://iccv1.herokuapp.com/iccs/studies")
+    //fetch("http://localhost:8981/iccs/studies")
+    fetch("https://iccv1.herokuapp.com/iccs/studies")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.content);
@@ -154,8 +165,8 @@ const Ebm = () => {
         subTitle="Choisisez et téléchargez les notes"
         icon={<SubjectIcon fontSize="large" />}
       />
-      <Paper className={classes.tableContainer}>
-        <Toolbar>
+      <Paper elevation={5} className={classes.tableContainer}>
+        <Toolbar className={classes.toolbar} style={{ width: "95%" }}>
           <TextField
             style={{ width: "75%", margin: "0.5rem" }}
             variant="outlined"
@@ -170,7 +181,7 @@ const Ebm = () => {
             }}
           />
         </Toolbar>
-        <TableContainer>
+        <TableContainer component={Paper} className={classes.cont}>
           <Table>
             <TableHeader
               valueToOrderBy={valueToOrderBy}
@@ -185,40 +196,93 @@ const Ebm = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((study, index) => (
                   <TableRow key={index} className={classes.espa}>
-                    <TableCell>{study.studyId}</TableCell>
-                    <TableCell>
-                      <Typography>{study.speaker.title}</Typography>
-                      <Typography className={classes.titre}>
-                        {study.speaker.firstName} {study.speaker.lastName}
-                      </Typography>
-                    </TableCell>
-                    <TableCell className={classes.reference}>
-                      {" "}
-                      <Tooltip title={study.studyReference.content}>
+                    <Hidden xsDown>
+                      <TableCell>{study.studyDay}</TableCell>
+                      <TableCell>
+                        <Grid container>
+                          <Grid item lg={2}>
+                            <Avatar
+                              alt={study.speaker.lastName}
+                              src="/yvan.png"
+                            />
+                          </Grid>
+                          <Grid item lg={10}>
+                            <Typography>{study.speaker.title}</Typography>
+                            <Typography
+                              variant="body2"
+                              className={classes.name}
+                            >
+                              {study.speaker.firstName} {study.speaker.lastName}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell>
                         <Typography className={classes.reference}>
                           {study.studyReference.passage}
                         </Typography>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell>{study.studyDay}</TableCell>
-                    <TableCell>
-                      <a
-                        href={`https://iccv1.herokuapp.com/downloadFile/${study.studyId}`}
-                      >
-                        <IconButton
-                          color="secondary"
-                          //onClick={() => onDownloadHandler(study.studyId)}
+                        <Typography style={{ maxWidth: "400px" }} noWrap>
+                          {study.studyReference.content}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <a
+                          href={`https://iccv1.herokuapp.com/downloadFile/${study.studyId}`}
                         >
-                          <GetAppIcon />
-                        </IconButton>
-                      </a>
-                    </TableCell>
+                          <IconButton
+                            color="secondary"
+                            //onClick={() => onDownloadHandler(study.studyId)}
+                          >
+                            <GetAppIcon />
+                          </IconButton>
+                        </a>
+                      </TableCell>
+                    </Hidden>
+                    <Hidden smUp>
+                      <TableCell
+                        style={{ maxWidth: "300px" }}
+                        /*                         onClick={() => {
+                          <a
+                            href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
+                          ></a>;
+                        }} */
+                      >
+                        <a
+                          style={{ textDecoration: "none" }}
+                          href={`https://iccv1.herokuapp.com/downloadFile/${study.studyId}`}
+                        >
+                          <Typography noWrap>
+                            <span style={{ fontWeight: "lighter" }}>
+                              {" "}
+                              {study.studyDay.slice(0, 6)}
+                              {study.studyDay.slice(8, 10)} -{" "}
+                            </span>
+                            <span className={classes.name}>
+                              {study.speaker.firstName} {study.speaker.lastName}
+                            </span>
+                          </Typography>
+
+                          <Typography noWrap>
+                            <span
+                              style={{ fontWeight: "bold", color: "black" }}
+                            >
+                              {" "}
+                              {study.studyReference.passage}
+                            </span>{" "}
+                            {" > "}
+                            <span>{study.studyReference.content}</span>
+                          </Typography>
+                        </a>
+                      </TableCell>
+                    </Hidden>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
+          style={{ padding: "10px", maxWidth: "110%" }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={studies.length}

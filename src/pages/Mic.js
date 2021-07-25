@@ -45,9 +45,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: theme.palette.primary.main,
   },
-  avatar: {
-    paddingRight: "5px",
-  },
+
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
@@ -243,7 +241,6 @@ const Mic = () => {
                         >
                           <Typography>
                             <span style={{ fontWeight: "lighter" }}>
-                              {" "}
                               {mic.micDay.slice(0, 6)}
                               {mic.micDay.slice(8, 10)} -{" "}
                             </span>
@@ -260,17 +257,17 @@ const Mic = () => {
                 ))}
             </TableBody>
           </Table>
-          <TablePagination
-            style={{ padding: "10px", maxWidth: "110%" }}
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={mics.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </TableContainer>
+        <TablePagination
+          style={{ padding: "10px", maxWidth: "110%" }}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={mics.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
     </>
   );
