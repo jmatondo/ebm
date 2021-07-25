@@ -10,6 +10,7 @@ import {
   Hidden,
   Grid,
   Avatar,
+  withStyles,
 } from "@material-ui/core";
 import TableBody from "@material-ui/core/TableBody";
 
@@ -27,6 +28,14 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import SearchIcon from "@material-ui/icons/Search";
 import PageHeader from "../components/PageHeader";
 import SubjectIcon from "@material-ui/icons/Subject";
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -159,7 +168,7 @@ const Ebm = () => {
   };
 
   return (
-    <>
+    <div className={classes.root}>
       <PageHeader
         title="Les études bibliques du midi"
         subTitle="Choisisez et téléchargez les notes"
@@ -195,7 +204,7 @@ const Ebm = () => {
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((study, index) => (
-                  <TableRow key={index} className={classes.espa}>
+                  <StyledTableRow key={index} className={classes.espa}>
                     <Hidden xsDown>
                       <TableCell>{study.studyDay}</TableCell>
                       <TableCell>
@@ -276,7 +285,7 @@ const Ebm = () => {
                         </a>
                       </TableCell>
                     </Hidden>
-                  </TableRow>
+                  </StyledTableRow>
                 ))}
             </TableBody>
           </Table>
@@ -292,7 +301,7 @@ const Ebm = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </>
+    </div>
   );
 };
 

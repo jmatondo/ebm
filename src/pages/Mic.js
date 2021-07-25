@@ -22,8 +22,17 @@ import {
   Avatar,
   Grid,
   Hidden,
+  withStyles,
 } from "@material-ui/core";
 import MicTableHeader from "../components/MicTableHeader";
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -188,7 +197,7 @@ const Mic = () => {
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((mic, index) => (
-                  <TableRow key={index} className={classes.espa}>
+                  <StyledTableRow key={index} className={classes.espa}>
                     {/*                     <TableCell>{mic.id}</TableCell>
                      */}{" "}
                     <Hidden xsDown>
@@ -253,7 +262,7 @@ const Mic = () => {
                         </a>
                       </TableCell>
                     </Hidden>
-                  </TableRow>
+                  </StyledTableRow>
                 ))}
             </TableBody>
           </Table>
