@@ -104,8 +104,8 @@ const Mic = () => {
 
   // Get data
   useEffect(() => {
-    fetch("http://localhost:8981/iccs/mic")
-      //fetch("https://iccv1.herokuapp.com/iccs/mic")
+    //fetch("http://localhost:8981/iccs/mic")
+    fetch("https://iccv1.herokuapp.com/iccs/mic")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
