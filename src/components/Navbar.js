@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useHistory } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { IconContext } from "react-icons";
@@ -6,16 +6,27 @@ import { Link } from "react-router-dom";
 import { SideBarData } from "./NavbarData";
 import "./Navbar.css";
 
+import { Hidden } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+
 const Navbar = () => {
   const [sidebar, setsidebar] = useState(false);
   const showSidebar = () => setsidebar(!sidebar);
+  //const history = useHistory();
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbar">
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
+          <Hidden xsDown>
+            <Link to="#" className="menu-bars">
+              <FaIcons.FaBars onClick={showSidebar} />
+            </Link>
+          </Hidden>
+          <Hidden smUp>
+            <Link to="/" className="menu-bars">
+              <FaIcons.FaHome />
+            </Link>
+          </Hidden>
           <span className="main-title">Résumés bibliques</span>
           <div></div>
         </div>

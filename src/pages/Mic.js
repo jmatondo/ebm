@@ -3,6 +3,7 @@ import PageHeader from "../components/PageHeader";
 import SubjectIcon from "@material-ui/icons/Subject";
 import SearchIcon from "@material-ui/icons/Search";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import HomeIcon from "@material-ui/icons/Home";
 
 import {
   IconButton,
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     display: "flex",
-    justifyContent: "space-flex-star",
+    justifyContent: "space-between",
   },
 }));
 
@@ -103,12 +104,12 @@ const Mic = () => {
 
   // Get data
   useEffect(() => {
-    //fetch("http://localhost:8981/iccs/mics")
-    fetch("https://iccv1.herokuapp.com/iccs/mics")
+    fetch("http://localhost:8981/iccs/mic")
+      //fetch("https://iccv1.herokuapp.com/iccs/mic")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.content);
-        setMics(data.content);
+        console.log(data);
+        setMics(data);
       });
   }, []);
 
@@ -157,7 +158,7 @@ const Mic = () => {
         icon={<SubjectIcon fontSize="large" />}
       />
 
-      <Paper className={classes.tableContainer}>
+      <Paper elevation={5} className={classes.tableContainer}>
         <Toolbar className={classes.toolbar} style={{ width: "95%" }}>
           <TextField
             style={{ width: "75%", margin: "0.5rem" }}
@@ -172,6 +173,7 @@ const Mic = () => {
               ),
             }}
           />
+
           {/* <div style={{ flexGrow: "5", backgroundColor: "green" }}>test</div> */}
         </Toolbar>
         <TableContainer component={Paper} className={classes.cont}>
@@ -214,9 +216,7 @@ const Mic = () => {
                         </Grid>
                       </TableCell>
                       <TableCell>
-                        <Typography noWrap style={{ backgroundColor: "red" }}>
-                          {mic.theme}
-                        </Typography>
+                        <Typography>{mic.theme}</Typography>
                       </TableCell>
                       <TableCell>
                         <a
@@ -242,10 +242,13 @@ const Mic = () => {
                           href={`https://iccv1.herokuapp.com/downloadFile/${mic.id}`}
                         >
                           <Typography>
-                            {mic.micDay} -{" "}
+                            <span style={{ fontWeight: "lighter" }}>
+                              {" "}
+                              {mic.micDay.slice(0, 6)}
+                              {mic.micDay.slice(8, 10)} -{" "}
+                            </span>
                             <span className={classes.name}>
-                              {mic.speaker.title} {mic.speaker.firstName}{" "}
-                              {mic.speaker.lastName}
+                              {mic.speaker.firstName} {mic.speaker.lastName}
                             </span>
                           </Typography>
 
