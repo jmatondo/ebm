@@ -35,7 +35,7 @@ const PageHeader = (props) => {
       <div className={classes.pageHeader}>
         <Card className={classes.pageIcon}>{icon}</Card>
         <div className={classes.pageTitle}>
-          <Typography className={classes.titre} variant="h5" component="div">
+          <Typography className={classes.titre} variant="h6" component="div">
             {title}
           </Typography>
           <Typography variant="subtitle2" component="div">

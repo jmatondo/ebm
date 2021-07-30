@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { SideBarData } from "./NavbarData";
 import "./Navbar.css";
 
-import { Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 
 const Navbar = () => {
@@ -27,7 +27,18 @@ const Navbar = () => {
               <FaIcons.FaHome />
             </Link>
           </Hidden>
-          <span className="main-title">Résumés bibliques</span>
+          <Hidden xsDown>
+            <Grid className="titre">
+              <span className="main-title">RB</span>
+              <span className="sub-title">Résumés bibliques</span>
+            </Grid>
+          </Hidden>
+          <Hidden smUp>
+            <Grid className="titre">
+              <span className="main-title">RB</span>
+              <span className="sub-title">Résumés bibliques</span>
+            </Grid>
+          </Hidden>
           <div></div>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>

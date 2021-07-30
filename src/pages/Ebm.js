@@ -28,6 +28,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import SearchIcon from "@material-ui/icons/Search";
 import PageHeader from "../components/PageHeader";
 import SubjectIcon from "@material-ui/icons/Subject";
+import * as BiIcons from "react-icons/bi";
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -144,8 +145,8 @@ const Ebm = () => {
   };
 
   useEffect(() => {
-    //fetch("http://localhost:8981/iccs/studies")
-    fetch("https://iccv1.herokuapp.com/iccs/studies")
+    fetch("http://localhost:8981/iccs/studies")
+      //fetch("https://iccv1.herokuapp.com/iccs/studies")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.content);
@@ -172,7 +173,7 @@ const Ebm = () => {
       <PageHeader
         title="Les études bibliques du midi"
         subTitle="Choisisez et téléchargez les notes"
-        icon={<SubjectIcon fontSize="large" />}
+        icon={<BiIcons.BiBible fontSize="30" />}
       />
       <Paper elevation={5} className={classes.tableContainer}>
         <Toolbar className={classes.toolbar} style={{ width: "95%" }}>

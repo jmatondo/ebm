@@ -4,6 +4,7 @@ import SubjectIcon from "@material-ui/icons/Subject";
 import SearchIcon from "@material-ui/icons/Search";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import HomeIcon from "@material-ui/icons/Home";
+import * as BiIcons from "react-icons/bi";
 
 import {
   IconButton,
@@ -162,7 +163,7 @@ const Mic = () => {
       <PageHeader
         title="Méga Impact conférence"
         subTitle="Choisisez et téléchargez les notes"
-        icon={<SubjectIcon fontSize="large" />}
+        icon={<BiIcons.BiChurch fontSize="30" />}
       />
 
       <Paper elevation={5} className={classes.tableContainer}>
